@@ -91,6 +91,10 @@ export default function App() {
   const [newMockTitle, setNewMockTitle] = useState("");
   const [newMockScore, setNewMockScore] = useState("");
   const [newMockTotal, setNewMockTotal] = useState("100");
+
+  // Removed unused 'newMockDate' state to fix deployment error.
+  // We will generate the date inside the submit handler instead.
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -165,7 +169,7 @@ export default function App() {
         );
         setLoading(false);
       },
-      () => setError("Failed to load data.")
+      (err) => setError(err.message || "Failed to load habits")
     );
 
     const unsubMocks = onSnapshot(
@@ -309,7 +313,7 @@ export default function App() {
         title: newMockTitle || "Mock",
         score: Number(newMockScore),
         total: Number(newMockTotal),
-        date: newMockDate,
+        date: formatDateKey(new Date()), // Use current date directly here
         ownerId: syncId,
         createdAt: serverTimestamp(),
       });
@@ -660,7 +664,7 @@ export default function App() {
                                   w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 mx-auto
                                   ${
                                     isCompleted
-                                      ? "bg-gradient-to-br from-green-500 to-green-800 text-white shadow-lg shadow-green-500/30 scale-100 rotate-0"
+                                      ? "bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30 scale-100 rotate-0"
                                       : "bg-slate-100 dark:bg-slate-800 text-slate-200 dark:text-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:scale-110"
                                   }
                                 `}
