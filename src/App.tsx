@@ -91,8 +91,6 @@ export default function App() {
   const [newMockTitle, setNewMockTitle] = useState("");
   const [newMockScore, setNewMockScore] = useState("");
   const [newMockTotal, setNewMockTotal] = useState("100");
-  const [newMockDate, setNewMockDate] = useState(formatDateKey(new Date()));
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -167,7 +165,7 @@ export default function App() {
         );
         setLoading(false);
       },
-      (err) => setError("Failed to load data.")
+      () => setError("Failed to load data.")
     );
 
     const unsubMocks = onSnapshot(
