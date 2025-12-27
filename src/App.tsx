@@ -550,7 +550,7 @@ export default function App() {
                   type='text'
                   value={newHabitTitle}
                   onChange={(e) => setNewHabitTitle(e.target.value)}
-                  placeholder='Add new subject...'
+                  placeholder='Add new todo...'
                   className='flex-1 md:w-64 px-4 py-2 bg-transparent text-sm font-medium focus:outline-none placeholder:text-slate-400 dark:text-slate-200'
                 />
                 <button
@@ -568,7 +568,7 @@ export default function App() {
                 <thead>
                   <tr className='bg-slate-50/50 dark:bg-slate-800/30'>
                     <th className='text-left py-5 px-6 font-display font-bold text-slate-500 dark:text-slate-400 text-sm w-1/6 sticky left-0 z-20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-100 dark:border-slate-800 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.05)]'>
-                      Subject
+                      Your Todo's
                     </th>
                     {dateColumns.map((date) => {
                       const isToday = formatDateKey(date) === todayKey;
@@ -580,7 +580,7 @@ export default function App() {
                           <div
                             className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 ${
                               isToday
-                                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 scale-110 -translate-y-1"
+                                ? "bg-green-600 text-white shadow-lg shadow-indigo-500/30 scale-110 -translate-y-1"
                                 : "text-slate-400 dark:text-slate-500"
                             }`}
                           >
@@ -664,7 +664,7 @@ export default function App() {
                                   w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 mx-auto
                                   ${
                                     isCompleted
-                                      ? "bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30 scale-100 rotate-0"
+                                      ? "bg-gradient-to-br from-green-500 to-green-800 text-white shadow-lg shadow-indigo-500/30 scale-100 rotate-0"
                                       : "bg-slate-100 dark:bg-slate-800 text-slate-200 dark:text-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:scale-110"
                                   }
                                 `}
