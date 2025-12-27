@@ -32,7 +32,6 @@ import {
   Smartphone,
   Copy,
   Download,
-  GraduationCap,
   Zap,
 } from "lucide-react";
 
