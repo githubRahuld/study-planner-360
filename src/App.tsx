@@ -32,7 +32,7 @@ import {
   Smartphone,
   Copy,
   Download,
-  Sparkles,
+  GraduationCap,
   Zap,
 } from "lucide-react";
 
@@ -417,16 +417,10 @@ export default function App() {
         {/* Navbar */}
         <nav className='sticky top-0 z-50 glass-panel px-6 py-4 flex justify-between items-center shadow-sm/50'>
           <div className='flex items-center gap-3 group cursor-pointer'>
-            <div className='bg-indigo-600 p-2.5 rounded-xl text-white shadow-lg shadow-indigo-500/20 transform group-hover:-rotate-6 transition-all duration-300'>
-              <Sparkles
-                size={20}
-                fill='currentColor'
-                className='text-yellow-300'
-              />
-            </div>
             <div className='flex flex-col'>
-              <h1 className='text-xl md:text-2xl font-display font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-none'>
-                Study Planner 360
+              <h1 className='text-xl md:text-2xl font-display font-extrabold bg-gradient-to-r from-green-400 to-green-800 bg-clip-text text-transparent leading-none'>
+                Study Planner{" "}
+                <span className='text-bold text-yellow-500'>360</span>
               </h1>
               <span className='text-[10px] font-bold text-slate-400 tracking-widest uppercase ml-0.5'>
                 Focus Mode On
@@ -532,7 +526,7 @@ export default function App() {
             <div className='p-6 md:p-8 border-b border-slate-100 dark:border-slate-700/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-6'>
               <div>
                 <h2 className='text-2xl font-display font-bold text-slate-800 dark:text-white flex items-center gap-2'>
-                  <span className='bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 p-2 rounded-xl'>
+                  <span className='bg-indigo-100 dark:bg-indigo-900/30 text-rose-600 dark:text-rose-400 p-2 rounded-xl'>
                     <Calendar size={20} />
                   </span>
                   Daily Targets
@@ -555,7 +549,7 @@ export default function App() {
                 />
                 <button
                   type='submit'
-                  className='bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-xl transition-all active:scale-90 shadow-md'
+                  className='bg-rose-500 hover:bg-rose-600 text-white p-2 rounded-xl transition-all shadow-lg shadow-rose-500/30 active:scale-95'
                 >
                   <Plus size={18} strokeWidth={3} />
                 </button>
