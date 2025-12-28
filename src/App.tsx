@@ -33,6 +33,7 @@ import {
   Copy,
   Download,
   Zap,
+  PartyPopper,
 } from "lucide-react";
 
 // --- 1. YOUR FIREBASE CONFIGURATION ---
@@ -93,6 +94,10 @@ export default function App() {
 
   // Removed unused 'newMockDate' state to fix deployment error.
   // We will generate the date inside the submit handler instead.
+
+  // Celebration State
+  const [showCongrats, setShowCongrats] = useState(false);
+  const [congratsDismissed, setCongratsDismissed] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -365,6 +370,26 @@ export default function App() {
     };
   }, [habits, dateColumns, todayKey]);
 
+  // --- Congratulation Logic ---
+  useEffect(() => {
+    if (loading) return;
+
+    // Check if 100% complete for today
+    if (stats.totalCount > 0 && stats.today === 100) {
+      if (!congratsDismissed) {
+        setShowCongrats(true);
+        // We set dismissed to true immediately when showing so it doesn't
+        // re-trigger on simple re-renders, but effectively tracks session state
+        setCongratsDismissed(true);
+      }
+    } else if (stats.today < 100) {
+      // If user unchecks a task, reset the dismissed state
+      // so they can be congratulated again if they finish again
+      setCongratsDismissed(false);
+      setShowCongrats(false);
+    }
+  }, [stats.today, stats.totalCount, loading, congratsDismissed]);
+
   if (loading)
     return (
       <div className='min-h-screen flex items-center justify-center bg-stone-50 dark:bg-[#0B1120] text-indigo-500'>
@@ -503,8 +528,46 @@ export default function App() {
             </div>
           </div>
         )}
+        {/* Congratulation Popup */}
+        {showCongrats && (
+          <div className='fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in'>
+            <div className='bg-white dark:bg-slate-800 rounded-3xl shadow-2xl p-8 w-full max-w-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden text-center'>
+              {/* Decorative Background */}
+              <div className='absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-50 pointer-events-none'></div>
+              <div className='absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 to-green-500'></div>
 
-        <main className='max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 relative z-10 animate-slide-up'>
+              <div className='relative z-10 flex flex-col items-center'>
+                <div className='bg-green-100 dark:bg-green-900/30 p-4 rounded-full mb-4 animate-bounce-slow'>
+                  <PartyPopper
+                    size={48}
+                    className='text-green-600 dark:text-green-400'
+                  />
+                </div>
+
+                <h3 className='text-2xl font-display font-extrabold text-slate-800 dark:text-white mb-2'>
+                  Amazing Work! 🎉
+                </h3>
+
+                <p className='text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed'>
+                  You've completed{" "}
+                  <strong className='text-green-600 dark:text-green-400'>
+                    100%
+                  </strong>{" "}
+                  of your tasks for today. Keep this momentum going!
+                </p>
+
+                <button
+                  onClick={() => setShowCongrats(false)}
+                  className='w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-500/30 active:scale-95 transition-all'
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <main className='max-w-6xl mx-auto p-2 sm:p-6 lg:p-8 space-y-8 relative z-10 animate-slide-up'>
           {/* Error Toast */}
           {error && (
             <div className='fixed bottom-6 right-6 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-2xl flex items-center gap-3 border border-red-100 dark:border-red-800/30 shadow-xl animate-fade-in z-50'>
@@ -573,7 +636,7 @@ export default function App() {
                           <div
                             className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-300 ${
                               isToday
-                                ? "bg-green-600 text-white shadow-lg shadow-indigo-500/30 scale-110 -translate-y-1"
+                                ? "bg-green-600 text-white shadow-lg shadow-green-500/30 scale-110 -translate-y-1"
                                 : "text-slate-400 dark:text-slate-500"
                             }`}
                           >
@@ -657,7 +720,7 @@ export default function App() {
                                   w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 mx-auto
                                   ${
                                     isCompleted
-                                      ? "bg-gradient-to-br from-green-500 to-green-800 text-white shadow-lg shadow-indigo-500/30 scale-100 rotate-0"
+                                      ? "bg-gradient-to-br from-green-500 to-green-800 text-white shadow-lg shadow-green-500/30 scale-100 rotate-0"
                                       : "bg-slate-100 dark:bg-slate-800 text-slate-200 dark:text-slate-700 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:scale-110"
                                   }
                                 `}
